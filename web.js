@@ -11,8 +11,20 @@ app.get('/', function(request, response) {
     var buf=fs.readFileSync('./index.html','utf8');
     response.send(buf.toString());
     });
+app.get('/about.html', function(request, response){
+	var buf=fs.readFileSync('./about.html','utf8');
+	response.send(buf.toString());
+	});
+app.get('/contact.html', function(request, response){
+	var buf=fs.readFileSync('./contact.html','utf8');
+	response.send(buf.toString());
+	});
+app.get('/index.html', function(request, response){
+	var buf=fs.readFileSync('./index.html','utf8');
+	response.send(buf.toString());
+	});
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
