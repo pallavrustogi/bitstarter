@@ -10,7 +10,7 @@ var readurl = "http://api.sportsdatallc.org/nhl-test3/games/9a6e608f-d48b-491d-b
 var localurl = "./data.xml"
 
 var link = "http://ec2-54-200-99-111.us-west-2.compute.amazonaws.com/data.xml";
-var responseURL = "..//public//data.xml"
+var responseURL = "public//data.xml"
 
 function convertToSec(time)
 {
