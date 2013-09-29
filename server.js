@@ -9,7 +9,7 @@ var sleep = require('sleep');
 var readurl = "http://api.sportsdatallc.org/nhl-test3/games/9a6e608f-d48b-491d-b790-eb06e1f0247b/pbp.xml?api_key=bvzyx3z2w7wnf27s9yfeyk8x";
 var localurl = "./data.xml"
 
-var link = http://ec2-54-200-99-111.us-west-2.compute.amazonaws.com/data.xml;
+var link = "http://ec2-54-200-99-111.us-west-2.compute.amazonaws.com/data.xml";
 var responseURL = "..//public//data.xml"
 
 function convertToSec(time)
@@ -33,11 +33,11 @@ function InitializeXML(doc)
 	doc.appendChild(currentEvent);
 }
 
-function createXMLResponse(doc, description)
+function CreateXMLResponse(doc, description)
 {
 	ResponseTag = doc.createElement('Response');
 	doc.appendChild(ResponseTag);
-	if(description!= NULL)
+	if(description!= "")
 	{
 	SayTag = doc.createElement('Say');
 	SayTag.appendChild(doc.createTextNode(description));
@@ -120,7 +120,7 @@ function readfile()
 			var s2 = new XMLSerializer();
 			var doc1 = new DOMParser().parseFromString(data.toString(),'text/xml');
 			CreateXMLResponse(doc1, responseTxt);
-			responsedata = s.serializeToString(doc);
+			responsedata = s.serializeToString(doc1);
 			fs.writeFile(responseURL, responsedata, function(err) {});
 			});
 			
