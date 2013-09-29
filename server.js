@@ -47,7 +47,7 @@ function CreateXMLResponse(doc, description)
 	else
 	{
 	SayTag = doc.createElement('Say');
-	SayTag.appendChild(doc.createTextNode("Lets check the stats"));
+	SayTag.appendChild(doc.createTextNode(""));
 	ResponseTag.appendChild(SayTag);
 	}
 	RedirectTag = doc.createElement('Redirect');
@@ -176,20 +176,21 @@ for(z=0;z<10;z++){
 readfile();
 setTimeout(function () {
     console.log('');
-}, 15000);}
+}, 15000);
 }
 
 for(z=0;z<10;z++){
 readfile();
 setTimeout(function () {
     console.log('');
-}, 15000);}
+}, 15000);
 }
 
 for(z=0;z<10;z++){
 readfile();
 setTimeout(function () {
     console.log('');
-}, 15000);}
+}, 15000);
+}
 
 
