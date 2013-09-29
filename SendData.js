@@ -68,7 +68,7 @@ function sendData()
 		{
 		if(timediff-clockdiff > -2 && timediff-clockdiff < 2)
 		{
-			console.log(timediff+ "  "+clockdiff);	
+
 			responseText += (result.root.event[i]['_']);
 		}
 		nexttime = convertToSec(result.root.event[i]['$']['clock']);

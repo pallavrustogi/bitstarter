@@ -11,6 +11,7 @@ var localurl = "./data.xml"
 
 var link = "http://ec2-54-200-99-111.us-west-2.compute.amazonaws.com/data.xml";
 var responseURL = "~/public/data.xml"
+var previousResponse = "";
 
 function convertToSec(time)
 {
@@ -41,6 +42,12 @@ function CreateXMLResponse(doc, description)
 	{
 	SayTag = doc.createElement('Say');
 	SayTag.appendChild(doc.createTextNode(description));
+	ResponseTag.appendChild(SayTag);
+	}
+	else
+	{
+	SayTag = doc.createElement('Say');
+	SayTag.appendChild(doc.createTextNode("Lets check the stats"));
 	ResponseTag.appendChild(SayTag);
 	}
 	RedirectTag = doc.createElement('Redirect');
@@ -94,7 +101,8 @@ function readfile()
 			packetTimeDiff2 = firstChildTime - nexttime2;
 			if(packetTimeDiff2 < timediff){ packetTimeDiff = packetTimeDiff2;nexttime =nexttime2 ;}
 			}
-			responseTxt = "";
+			var responseTxt = "";
+			
 			while(packetTimeDiff < timediff || currentEvent == 0)
 			{
 			lastdescription = result.game.period[currentPeriod].events[0].event[currentEvent].description[0];
@@ -102,7 +110,7 @@ function readfile()
 			newDescription = doc.createElement('event');
 			newDescription.setAttribute('clock',time);
 			newDescription.appendChild(doc.createTextNode(lastdescription));
-			responseTxt += lastdescription;
+			responseTxt += lastdescription + ". ";
 			doc.appendChild(newDescription);
 			currentEvent++;
 			if(nexttime == 0 && packetTimeDiff == timediff ) break;
@@ -115,7 +123,15 @@ function readfile()
 			if(packetTimeDiff2 < timediff){ packetTimeDiff = packetTimeDiff2;nexttime =nexttime2;}
 			}
 			}
+			if(previousResponse != responseTxt)
+			{
+			previousResponse = responseTxt;
 			
+			}
+			else
+			{
+			responseTxt="";
+			}
 			fs.readFile( localurl, function(err, data) {
 			var s2 = new XMLSerializer();
 			var doc1 = new DOMParser().parseFromString(data.toString(),'text/xml');
@@ -151,9 +167,23 @@ function readfile()
 	});
 }
 
-for(i =0;i<1000;i++){
+
+for(z=0;z<10;z++){
 readfile();
 sleep.sleep(2);
 }
 
+for(z=0;z<10;z++){
+readfile();
+sleep.sleep(2);
+}
 
+for(z=0;z<10;z++){
+readfile();
+sleep.sleep(2);
+}
+
+for(z=0;z<10;z++){
+readfile();
+sleep.sleep(2);
+}
