@@ -124,6 +124,7 @@ function readfile()
 				}
 			CreateXMLResponse(doc1, responseTxt);
 			responsedata = s.serializeToString(doc1);
+			console.log(responsedata);
 			fs.writeFile(responseURL, responsedata, function(err) {});
 			});
 			
