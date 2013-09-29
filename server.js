@@ -141,7 +141,11 @@ function readfile()
 			CreateXMLResponse(doc1, responseTxt);
 			responsedata = s.serializeToString(doc1);
 			console.log(responsedata);
-			fs.writeFile(responseURL, responsedata, function(err) {});
+			fs.writeFile(responseURL, responsedata, function(err) {
+			if(err) {
+					console.log(err);
+				    }
+			});
 			});
 			
 			doc.getElementsByTagName('currentEvent')[0].textContent = currentEvent;
