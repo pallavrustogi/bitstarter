@@ -35,15 +35,15 @@ function readfile()
 	var currentPeriod = 0;
 	var currentEvent = 0;
 	var lastBeach = '';
-	fs.open(localurl, "r", function(error, fd) {
-	fs.readFile( fd, function(err, data) {
+	
+	fs.readFile( localurl, function(err, data) {
 		var s = new XMLSerializer();
 		xml2jsparser = new xml2js.Parser();
 		var doc = new DOMParser().parseFromString(data.toString(),'text/xml');
 		if(doc.childNodes.length <= 1) {
 			InitializeXML(doc);
 			str = s.serializeToString(doc);
-			fs.writeFile(fd, str,0);
+			fs.writeFile(localurl, str,0);
 			}
 		startTime = doc.getElementsByTagName('StartTime')[0].textContent;	
 		currentPeriod = doc.getElementsByTagName('currentPeriod')[0].textContent;
@@ -98,7 +98,7 @@ function readfile()
 			doc.getElementsByTagName('currentEvent')[0].textContent = currentEvent;
 			str = s.serializeToString(doc);
 			
-			fs.writeFile(fd, str, function(err) {
+			fs.writeFile(localurl, str, function(err) {
 				if(err) {
 					console.log(err);
 				    }
@@ -116,12 +116,10 @@ function readfile()
 			};
 		});
 	});
-	fs.close(fd);
-	});
 }
 
-for(i =0;i<100;i++){
-readfile();sleep.sleep(3);
+for(i =0;i<10;i++){
+readfile();
 }
 
 

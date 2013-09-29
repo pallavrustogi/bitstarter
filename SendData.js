@@ -5,7 +5,7 @@ var request = require('request');
 var XMLSerializer = require('xmldom').XMLSerializer;
 
 ptrs = './Local.xml'
-localurl= './data.xml'
+localurl= 'https://raw.github.com/pallavrustogi/bitstarter/master/data.xml'
 
 function convertToSec(time)
 {
@@ -33,37 +33,45 @@ function sendData()
 			console.log(str);
 			fs.writeFile(ptrs, str,0);
 		}
-		startTime = doc1.getElementsByTagName('StartTime').textContent;
+		startTime = doc1.getElementsByTagName('StartTime')[0].textContent;
 		currentIdx = doc1.getElementsByTagName('currentIdx').textContent;
 		var currentdate = new Date();
 		var startdate = new Date(startTime);
 		
 		timediff = (Math.round((currentdate-startdate)/1000));
 		
-		
+		//console.log(startTime);
 		request(localurl, function (error, response, body) {
-		console.log(body);
-		xml2jsparser.parseString(body, function (err, result) {
+		xml2jsparser.parseString("<root>"+body+"</root>", function (err, result) {
 		
-		console.log(result.root);
-		length = 0//result.root[0].event.length;
-		nextIdx=length;
+		length = result.root.event.length;
+		nextIdx=0;
 		nexttime = convertToSec(result.root.event[length-1]['$']['clock']);
 		firsttime = convertToSec(result.root.event[0]['$']['clock']);
 		clockdiff = firsttime - nexttime;
-		while(timediff - clockdiff < 2)
-		{
-		nextIdx--;
-		nexttime = convertToSec(result.root.event[nextIdx]['$']['clock']);
 		
+		if(timediff > nexttime) {
+		//fs.writeFile(localurl, "",0);
+		}
+		/*while(clockdiff - timediff< 2)
+		{
+		nextIdx++;
+		nexttime = convertToSec(result.event[nextIdx]['$']['clock']);
+		}*/
+		console.log(timediff+ "  "+clockdiff+ " " + length);
+		responseText = "";
+		for(i=1;i<length;i++) 
+		{
+		if(timediff-clockdiff > -2 && timediff-clockdiff < 2)
+			{
+			responseText += (result.root.event[i]['_']);
+			}
+		nexttime = convertToSec(result.root.event[i]['$']['clock']);
+		clockdiff = firsttime - nexttime;
+		console.log(timediff+ "  "+clockdiff);	
 		}
 		
-		responseText = "";
-		
-		for(i=nextIdx+1;i<length;i++) responseText += (result.root.event[i]);
-		
-		
-
+		console.log(responseText);
 		});
 		
 		});
