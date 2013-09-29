@@ -119,6 +119,9 @@ function readfile()
 			fs.readFile( localurl, function(err, data) {
 			var s2 = new XMLSerializer();
 			var doc1 = new DOMParser().parseFromString(data.toString(),'text/xml');
+			while (doc1.firstChild) {
+				    doc1.removeChild(doc1.firstChild);
+				}
 			CreateXMLResponse(doc1, responseTxt);
 			responsedata = s.serializeToString(doc1);
 			fs.writeFile(responseURL, responsedata, function(err) {});
