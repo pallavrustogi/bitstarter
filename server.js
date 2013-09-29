@@ -132,7 +132,7 @@ function readfile()
 			{
 			responseTxt="";
 			}
-			fs.readFile( localurl, function(err, data) {
+			fs.readFile( responseURL, function(err, data) {
 			var s2 = new XMLSerializer();
 			var doc1 = new DOMParser().parseFromString(data.toString(),'text/xml');
 			while (doc1.firstChild) {
