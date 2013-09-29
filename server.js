@@ -140,8 +140,8 @@ function readfile()
 				}
 			CreateXMLResponse(doc1, responseTxt);
 			responsedata = s.serializeToString(doc1);
-			console.log(responsedata);
-			fs.writeFile(responseURL, responsedata, function(err) {
+			//console.log(responsedata);
+			fs.writeFile(responseURL, "<?xml version='1.0' encoding='UTF-8'?>"+responsedata, function(err) {
 			if(err) {
 					console.log(err);
 				    }
@@ -170,8 +170,8 @@ function readfile()
 		});
 	});
 }
-
-
+readfile();
+/*
 for(z=0;z<10;z++){
 readfile();
 setTimeout(function () {
@@ -194,3 +194,4 @@ setTimeout(function () {
 }
 
 
+*/
