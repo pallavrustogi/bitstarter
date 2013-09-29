@@ -3,9 +3,11 @@ var xml2js = require('xml2js');
 var fs = require('fs');
 var request = require('request');
 var XMLSerializer = require('xmldom').XMLSerializer;
+var http = require('http');
 
 ptrs = './Local.xml'
 localurl= 'data.xml'
+
 
 function convertToSec(time)
 {
@@ -30,7 +32,7 @@ function sendData()
 			currentIdx.appendChild(doc1.createTextNode('0'));
 			doc1.appendChild(currentIdx);
 			str = s.serializeToString(doc1);
-			console.log(str);
+			//console.log(str);
 			fs.writeFile(ptrs, str,0);
 		}
 		startTime = doc1.getElementsByTagName('StartTime')[0].textContent;
@@ -41,7 +43,9 @@ function sendData()
 		timediff = (Math.round((currentdate-startdate)/1000));
 		
 		//console.log(startTime);
-		request(localurl, function (error, response, body) {
+		fs.readFile( localurl, function(err, body) {
+		if(body != "")
+		{
 		xml2jsparser.parseString("<root>"+body+"</root>", function (err, result) {
 		
 		length = result.root.event.length;
@@ -51,7 +55,7 @@ function sendData()
 		clockdiff = firsttime - nexttime;
 		
 		if(timediff > nexttime) {
-		//fs.writeFile(localurl, "",0);
+		fs.writeFile(localurl, "",0);
 		}
 		/*while(clockdiff - timediff< 2)
 		{
@@ -73,7 +77,7 @@ function sendData()
 		
 		console.log(responseText);
 		});
-		
+		}
 		});
 		
 		
