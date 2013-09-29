@@ -110,7 +110,7 @@ function readfile()
 			newDescription = doc.createElement('event');
 			newDescription.setAttribute('clock',time);
 			newDescription.appendChild(doc.createTextNode(lastdescription));
-			responseTxt += lastdescription + ". ";
+			responseTxt += lastdescription + " .";
 			doc.appendChild(newDescription);
 			currentEvent++;
 			if(nexttime == 0 && packetTimeDiff == timediff ) break;
@@ -132,7 +132,7 @@ function readfile()
 			{
 			responseTxt="";
 			}
-			fs.readFile( responseURL, function(err, data) {
+			fs.readFile( localurl, function(err, data) {
 			var s2 = new XMLSerializer();
 			var doc1 = new DOMParser().parseFromString(data.toString(),'text/xml');
 			while (doc1.firstChild) {
@@ -172,3 +172,4 @@ for(z=0;z<10;z++){
 readfile();
 //sleep.sleep(2);
 }
+
