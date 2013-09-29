@@ -170,20 +170,5 @@ function readfile()
 
 for(z=0;z<10;z++){
 readfile();
-sleep.sleep(2);
-}
-
-for(z=0;z<10;z++){
-readfile();
-sleep.sleep(2);
-}
-
-for(z=0;z<10;z++){
-readfile();
-sleep.sleep(2);
-}
-
-for(z=0;z<10;z++){
-readfile();
-sleep.sleep(2);
+//sleep.sleep(2);
 }
