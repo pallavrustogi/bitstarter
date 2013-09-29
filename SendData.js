@@ -5,7 +5,7 @@ var request = require('request');
 var XMLSerializer = require('xmldom').XMLSerializer;
 
 ptrs = './Local.xml'
-localurl= 'https://raw.github.com/pallavrustogi/bitstarter/master/data.xml'
+localurl= 'data.xml'
 
 function convertToSec(time)
 {
