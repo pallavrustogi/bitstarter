@@ -150,8 +150,9 @@ function readfile()
 	});
 }
 
-for(i =0;i<10;i++){
+for(i =0;i<1000;i++){
 readfile();
+sleep.sleep(2);
 }
 
 
