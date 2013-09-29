@@ -9,6 +9,9 @@ var sleep = require('sleep');
 var readurl = "http://api.sportsdatallc.org/nhl-test3/games/9a6e608f-d48b-491d-b790-eb06e1f0247b/pbp.xml?api_key=bvzyx3z2w7wnf27s9yfeyk8x";
 var localurl = "./data.xml"
 
+var link = http://ec2-54-200-99-111.us-west-2.compute.amazonaws.com/data.xml;
+var responseURL = "..//public//data.xml"
+
 function convertToSec(time)
 {
 t=time.split(':');
@@ -28,6 +31,21 @@ function InitializeXML(doc)
 	currentEvent = doc.createElement('currentEvent');
 	currentEvent.appendChild(doc.createTextNode('0'));
 	doc.appendChild(currentEvent);
+}
+
+function createXMLResponse(doc, description)
+{
+	ResponseTag = doc.createElement('Response');
+	doc.appendChild(ResponseTag);
+	if(description!= NULL)
+	{
+	SayTag = doc.createElement('Say');
+	SayTag.appendChild(doc.createTextNode(description));
+	ResponseTag.appendChild(SayTag);
+	}
+	RedirectTag = doc.createElement('Redirect');
+	RedirectTag.appendChild(doc.createTextNode(link));
+	ResponseTag.appendChild(RedirectTag);
 }
 
 function readfile()
@@ -76,6 +94,7 @@ function readfile()
 			packetTimeDiff2 = firstChildTime - nexttime2;
 			if(packetTimeDiff2 < timediff){ packetTimeDiff = packetTimeDiff2;nexttime =nexttime2 ;}
 			}
+			responseTxt = "";
 			while(packetTimeDiff < timediff || currentEvent == 0)
 			{
 			lastdescription = result.game.period[currentPeriod].events[0].event[currentEvent].description[0];
@@ -83,6 +102,7 @@ function readfile()
 			newDescription = doc.createElement('event');
 			newDescription.setAttribute('clock',time);
 			newDescription.appendChild(doc.createTextNode(lastdescription));
+			responseTxt += lastdescription;
 			doc.appendChild(newDescription);
 			currentEvent++;
 			if(nexttime == 0 && packetTimeDiff == timediff ) break;
@@ -95,6 +115,15 @@ function readfile()
 			if(packetTimeDiff2 < timediff){ packetTimeDiff = packetTimeDiff2;nexttime =nexttime2;}
 			}
 			}
+			
+			fs.readFile( localurl, function(err, data) {
+			var s2 = new XMLSerializer();
+			var doc1 = new DOMParser().parseFromString(data.toString(),'text/xml');
+			CreateXMLResponse(doc1, responseTxt);
+			responsedata = s.serializeToString(doc);
+			fs.writeFile(responseURL, responsedata, function(err) {});
+			});
+			
 			doc.getElementsByTagName('currentEvent')[0].textContent = currentEvent;
 			str = s.serializeToString(doc);
 			
